@@ -69,52 +69,53 @@ def stemmer(source, info, mode):
   stems = []
 
   for token in tokens:
-    word = {}
-    duplicates = []
-    prefs = []
-    infs = []
-    suffs = []
-    token = token.lower().strip()
+    if token != '':
+      word = {}
+      duplicates = []
+      prefs = []
+      infs = []
+      suffs = []
+      token = token.lower().strip()
 
-    dup_stem = check_duplicate(token, duplicates)
-    pre_stem = check_prefix(dup_stem, prefs)
-    suf_stem = check_suffix(pre_stem, suffs)
-    inf_stem = check_infix(suf_stem, infs)
-    suf_stem = check_suffix(inf_stem, suffs)
-    dup_stem = check_duplicate(suf_stem, duplicates)
-    stem = clean(dup_stem, word)
+      dup_stem = check_duplicate(token, duplicates)
+      pre_stem = check_prefix(dup_stem, prefs)
+      suf_stem = check_suffix(pre_stem, suffs)
+      inf_stem = check_infix(suf_stem, infs)
+      suf_stem = check_suffix(inf_stem, suffs)
+      dup_stem = check_duplicate(suf_stem, duplicates)
+      stem = clean(dup_stem, word)
 
-    word["original"] = token
+      word["original"] = token
 
-    if validate(stem):
-      word["root"] = stem
-      stems.append(stem)
+      if validate(stem):
+        word["root"] = stem
+        stems.append(stem)
 
-      if len(duplicates) != 0:
-        word["duplication"] = duplicates
+        if len(duplicates) != 0:
+          word["duplication"] = duplicates
 
-      if len(prefs) != 0:
-        word["prefixes"] = prefs
-      
-      if len(infs) != 0:
-        word["infixes"] = infs
-      
-      if len(suffs) != 0:
-        word["suffixes"] = suffs
-    else:
-      word["root"] = token
-      stems.append(token)
+        if len(prefs) != 0:
+          word["prefixes"] = prefs
+        
+        if len(infs) != 0:
+          word["infixes"] = infs
+        
+        if len(suffs) != 0:
+          word["suffixes"] = suffs
+      else:
+        word["root"] = token
+        stems.append(token)
 
-    stems_info.append(word)
+      stems_info.append(word)
 
   if mode == 3:
     name = source[:source.find(".")] + "_stemmed.txt"
     with open(name, 'w') as out:
       if info:
         for w in stems_info:
-          out.write(w)
+          out.write(str(w))
       else:
-        out.write(stems)
+        out.write(str(stems))
 
   return stems
 

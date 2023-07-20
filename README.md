@@ -7,5 +7,5 @@ The Cebuano Word Stemmer is a program that takes Cebuano words and returns the r
 ### Issues to Fix:
 - [ ] -ng enclitic (malipayong --> *malipayong : malipayon)
 - [ ] Lack of words in dictionary
-- [ ] Filter out empty tokens
+- [x] Filter out empty tokens
 - [ ] Add in accuracy/validation calculation
