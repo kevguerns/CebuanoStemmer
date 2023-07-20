@@ -1,8 +1,5 @@
 import sys
 
-VOWELS = "aeiouAEIOU"
-CONSONANTS = "bcdfghklmnngpqrstvwyBCDFGHKLMNNGPQRSTVWY"
-
 PREFIXES = ['ipagpakig', 'ipagpaki', 'magapaka', 'mahapang',
               'mahipang', 'makapang', 'nagapaka', 'nahapang',
               'nahipang', 'nakapang', 'pagapaka', 'pagpakig',
@@ -43,9 +40,6 @@ PREFIXES = ['ipagpakig', 'ipagpaki', 'magapaka', 'mahapang',
 INFIXES = ['in', 'g']
 
 SUFFIXES = ['han', "'y", 'ng', 'an', 'on', 'ay', 'i', 'a', 'g']
-
-global src
-src = 'cebuano_dict.txt'
 
 def stemmer(source, info, mode):
   '''
@@ -113,9 +107,14 @@ def stemmer(source, info, mode):
 
     stems_info.append(word)
 
-  if info:
-    for w in stems_info:
-      print(w)
+  if mode == 3:
+    name = source[:source.find(".")] + "_stemmed.txt"
+    with open(name, 'w') as out:
+      if info:
+        for w in stems_info:
+          out.write(w)
+      else:
+        out.write(stems)
 
   return stems
 
@@ -215,7 +214,7 @@ def validate(token):
     Checks if token is a valid token.
   '''
 
-  with open(src, 'r') as validation:
+  with open("cebuano_dict.txt", 'r') as validation:
     val_set = validation.read().split('\n')
 
   return token in val_set
